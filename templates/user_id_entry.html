@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gredien: Movie Search & Recommendations</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="gradient-title">🎬 Movie Search & Recommendations</h1>
+            <p>Choose your preferred option to get started!</p>
+        </div>
+
+        {% if error %}
+        <div class="error-message">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        <div class="options-section">
+            <div class="option-card">
+                <h2>🔍 Search Movies</h2>
+                <p>Search for specific movies by title, genre, or keywords</p>
+                <form action="/search_page" method="GET">
+                    <button type="submit" class="option-btn">Start Searching</button>
+                </form>
+            </div>
+
+            <div class="option-card">
+                <h2>🎯 Get Recommendations</h2>
+                <p>Get personalized movie recommendations based on your taste</p>
+                <form action="/genre_recommendations" method="GET">
+                    <button type="submit" class="option-btn">Get Recommendations</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html> 

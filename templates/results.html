@@ -1,0 +1,84 @@
+<!-- templates/results.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gredien: Results</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      {% if is_recommendation %}
+        <h1 class="gradient-title">⭐ Your Movie Recommendations</h1>
+        <p>Personalized recommendations based on your preferences</p>
+      {% else %}
+        <h1 class="gradient-title">🔍 Search Results</h1>
+        <p>Results for your search query</p>
+      {% endif %}
+      
+      <div class="nav-links">
+        <a href="/" class="nav-link">← Back to Home</a>
+      </div>
+    </div>
+
+    <div class="results-section">
+      {% if message %}
+        <div class="no-results">
+          <p>{{ message }}</p>
+          <a href="/" class="btn btn-primary">Back to Home</a>
+        </div>
+      {% elif results %}
+        <div class="results-header">
+          {% if is_recommendation %}
+            <h2>🎯 Recommended Movies for You</h2>
+            <p>Based on your genre preferences</p>
+          {% else %}
+            <h2>📽️ Found Movies</h2>
+            <p>Showing top results for your search</p>
+          {% endif %}
+        </div>
+
+        <div class="results-grid">
+          {% for result in results %}
+          <div class="movie-card">
+            <img class="movie-poster"
+                 src="{{ result.poster_url if result.poster_url else 'https://i.pinimg.com/736x/2c/d5/f9/2cd5f95facd32432677a2a7f75391468.jpg' }}"
+                 alt="{{ result.title }} poster"
+                 loading="lazy"
+                 onerror="this.onerror=null;this.src='https://i.pinimg.com/736x/2c/d5/f9/2cd5f95facd32432677a2a7f75391468.jpg';" />
+            <div class="movie-title">{{ result.title }}</div>
+            <div class="movie-links">
+              {% if result.link1 %}
+                <a href="{{ result.link1 }}" target="_blank" class="movie-link">UHD (Recommended)</a>
+              {% endif %}
+              {% if result.link2 %}
+                <a href="{{ result.link2 }}" target="_blank" class="movie-link">HDMOVIE</a>
+              {% endif %}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="results-actions">
+          {% if is_recommendation %}
+            <a href="/search_page" class="btn btn-secondary">Search for More Movies</a>
+          {% else %}
+            <a href="/genre_recommendations" class="btn btn-secondary">Get Recommendations</a>
+          {% endif %}
+          <a href="/" class="btn btn-primary">Back to Home</a>
+        </div>
+      {% else %}
+        <div class="no-results">
+          <p>No results found. Try a different search or get recommendations instead.</p>
+          <div class="no-results-actions">
+            <a href="/search_page" class="btn btn-secondary">Try Another Search</a>
+            <a href="/genre_recommendations" class="btn btn-primary">Get Recommendations</a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    <script src="/static/js/app.js"></script>
+</body>
+</html>
